@@ -30,7 +30,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   Future<void> bootstrap() async {
     final logged = await ref.read(authProvider.notifier).isLogged();
     if (!mounted) return;
-    context.go(logged ? AppRoutes.home : AppRoutes.login);
+    context.go(logged ? AppRoutes.home : AppRoutes.onboarding);
   }
 
   @override

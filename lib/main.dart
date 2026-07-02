@@ -34,7 +34,8 @@ class AirsoftCascavelApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: AppStyle.light(),
       darkTheme: AppStyle.dark(),
-      themeMode: ThemeMode.system,
+      // Dark-only for now — the design (and the auth flow) is built dark.
+      themeMode: ThemeMode.dark,
       routerConfig: ref.watch(routerProvider),
       // pt-BR locale for dates/formatting.
       localizationsDelegates: const [

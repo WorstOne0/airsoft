@@ -18,7 +18,12 @@ class RouterNotifier extends ChangeNotifier {
 
   final Ref ref;
 
-  static const publicRoutes = {AppRoutes.splash, AppRoutes.login, AppRoutes.register};
+  static const publicRoutes = {
+    AppRoutes.splash,
+    AppRoutes.onboarding,
+    AppRoutes.login,
+    AppRoutes.register,
+  };
 
   String? redirect(BuildContext context, GoRouterState state) {
     final isLoggedIn = ref.read(authProvider).user != null;

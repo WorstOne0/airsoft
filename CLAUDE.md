@@ -96,16 +96,22 @@ Each feature: `pages/`, optional `widgets/` + `controllers/`, and a
 ## Code conventions
 
 ### No private class members
-Do **not** use the `_` prefix for class fields/methods (project convention from
-the base app). Local variables inside functions are fine. State classes
-(`_LoginPageState`) keep the `_` because Flutter's `createState` requires it, and
-small private `_helper()` build methods are acceptable.
+Do **not** use the `_` prefix for **any** class field or method — this includes
+widget-building helper methods (`orDivider()`, `strengthMeter()`), getters, and
+logic helpers. Local variables inside functions are fine. State classes
+(`_LoginPageState`) keep the `_` only because Flutter's `createState` requires it.
+
+### Method order — `build()` last
+Declare `build()` as the **last** method in the class. Everything else — lifecycle
+(`initState`/`dispose`), logic methods, and the `Widget xxx()` helpers `build()`
+calls — sits **above** it, in call order. Do not put helper methods below
+`build()`. See `register_page.dart` for the canonical layout.
 
 ### Widgets, not nested private classes
 Do **not** declare private widget classes (`class _FooCard`) below a page. Either:
 - extract a reusable widget into `widgets/` (shared) or the feature's `widgets/`
   folder (e.g. `home/widgets/post_card.dart`), **or**
-- use a small `Widget _buildFoo()` method inside the State.
+- use a small `Widget buildFoo()` method (no `_`) declared above `build()`.
 
 ### Spacing
 Keep breathing room: blank line after guard clauses, between field groups, and

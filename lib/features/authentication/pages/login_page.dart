@@ -9,7 +9,9 @@ import '/core/controllers/auth_controller.dart';
 // Repositories
 import '/core/repositories/auth_repository.dart' show mockEmail, mockPassword;
 // Widgets
-import '/widgets/app_logo.dart';
+import '../widgets/auth_background.dart';
+import '/widgets/app_logo_badge.dart';
+import '/widgets/auth_field.dart';
 // Utils
 import '/utils/extensions/context_extensions.dart';
 import '/utils/extensions/string_extensions.dart';
@@ -27,8 +29,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  bool isLoading = false;
-  bool isPasswordVisible = false;
+  bool isLoading = false, isPasswordVisible = false;
 
   @override
   void dispose() {
@@ -66,94 +67,147 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
+  Widget orDivider() {
+    final color = context.colorScheme.outlineVariant;
+
+    return Row(
+      children: [
+        Expanded(child: Divider(color: color)),
+
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Text(
+            'OU',
+            style: context.textTheme.labelMedium?.copyWith(color: context.colorScheme.onSurfaceVariant),
+          ),
+        ),
+
+        Expanded(child: Divider(color: color)),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Center(child: AppLogo(color: context.colorScheme.onSurface, fontSize: 56)),
+      body: Stack(
+        children: [
+          const Positioned.fill(child: AuthBackground(solidStart: 0.30)),
 
-                const SizedBox(height: 8),
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 8),
 
-                Center(
-                  child: Text('Login', style: context.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700)),
-                ),
+                  Center(child: AppLogoBadge(size: context.screenWidth * 0.40)),
 
-                const SizedBox(height: 32),
+                  const SizedBox(height: 20),
 
-                TextField(
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  autocorrect: false,
-                  decoration: const InputDecoration(labelText: 'Email', prefixIcon: Icon(Icons.email_outlined)),
-                ),
+                  Text(
+                    'BEM-VINDO DE VOLTA',
+                    style: context.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
+                  ),
 
-                const SizedBox(height: 14),
+                  const SizedBox(height: 6),
 
-                TextField(
-                  controller: passwordController,
-                  obscureText: !isPasswordVisible,
-                  onSubmitted: (_) => handleLogin(),
-                  decoration: InputDecoration(
-                    labelText: 'Senha',
-                    prefixIcon: const Icon(Icons.lock_outline),
+                  Text(
+                    'Faça login para voltar à ação.',
+                    style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.onSurfaceVariant),
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  AuthField(
+                    controller: emailController,
+                    label: 'E-MAIL OU CODINOME',
+                    hintText: 'operador@airsoft.com',
+                    prefixIcon: Icons.mail_outline,
+                    keyboardType: TextInputType.emailAddress,
+                    autocorrect: false,
+                  ),
+
+                  const SizedBox(height: 18),
+
+                  AuthField(
+                    controller: passwordController,
+                    label: 'SENHA',
+                    hintText: '••••••••',
+                    prefixIcon: Icons.lock_outline,
+                    obscureText: !isPasswordVisible,
+                    onSubmitted: (_) => handleLogin(),
                     suffixIcon: IconButton(
                       icon: Icon(isPasswordVisible ? Icons.visibility : Icons.visibility_off),
                       onPressed: () => setState(() => isPasswordVisible = !isPasswordVisible),
                     ),
                   ),
-                ),
 
-                const SizedBox(height: 24),
+                  const SizedBox(height: 4),
 
-                ElevatedButton(
-                  onPressed: isLoading ? null : handleLogin,
-                  child: isLoading
-                      ? const SizedBox(
-                          height: 22,
-                          width: 22,
-                          child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white),
-                        )
-                      : const Text('ENTRAR'),
-                ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () => context.showSnackBar('Recuperação de senha em breve.'),
+                      child: const Text('Esqueceu a senha?'),
+                    ),
+                  ),
 
-                const SizedBox(height: 12),
+                  const SizedBox(height: 12),
 
-                TextButton(
-                  onPressed: () => context.showSnackBar('Recuperação de senha em breve.'),
-                  child: const Text('Esqueceu a senha? Clique aqui'),
-                ),
+                  ElevatedButton(
+                    onPressed: isLoading ? null : handleLogin,
+                    child: switch (isLoading) {
+                      true => const SizedBox(
+                        height: 22,
+                        width: 22,
+                        child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white),
+                      ),
+                      false => const Text('ENTRAR'),
+                    },
+                  ),
 
-                const SizedBox(height: 8),
+                  const SizedBox(height: 20),
 
-                const Divider(),
+                  orDivider(),
 
-                const SizedBox(height: 8),
+                  const SizedBox(height: 20),
 
-                Text('Ainda não possui uma conta?', textAlign: TextAlign.center, style: context.textTheme.bodyMedium),
+                  Center(
+                    child: Text.rich(
+                      TextSpan(
+                        text: 'Novo por aqui? ',
+                        style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.onSurfaceVariant),
+                        children: [
+                          WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: GestureDetector(
+                              onTap: () => context.push(AppRoutes.register),
+                              child: Text(
+                                'Criar conta',
+                                style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
 
-                const SizedBox(height: 8),
+                  const SizedBox(height: 16),
 
-                OutlinedButton(onPressed: () => context.push(AppRoutes.register), child: const Text('CADASTRAR')),
-
-                const SizedBox(height: 24),
-
-                // Dev helper — remove once the real backend is connected.
-                Text(
-                  'Login de teste: $mockEmail / $mockPassword',
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.outline),
-                ),
-              ],
+                  // Dev helper — remove once the real backend is connected.
+                  Text(
+                    'Login de teste: $mockEmail / $mockPassword',
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.bodySmall?.copyWith(color: context.colorScheme.outline),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
