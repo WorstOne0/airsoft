@@ -1,7 +1,8 @@
 // Flutter packages
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+// Router
+import 'app_bottom_nav.dart';
 
 /// Persistent bottom-navigation shell for the authenticated tabs.
 /// Each tab keeps its own navigation stack via [StatefulNavigationShell], so
@@ -10,14 +11,6 @@ class AppShell extends StatelessWidget {
   const AppShell({required this.navigationShell, super.key});
 
   final StatefulNavigationShell navigationShell;
-
-  static const destinations = <NavigationDestination>[
-    NavigationDestination(icon: FaIcon(FontAwesomeIcons.house), label: 'Início'),
-    NavigationDestination(icon: FaIcon(FontAwesomeIcons.store), label: 'Market'),
-    NavigationDestination(icon: FaIcon(FontAwesomeIcons.calendarDays), label: 'Eventos'),
-    NavigationDestination(icon: FaIcon(FontAwesomeIcons.userGroup), label: 'Comunidade'),
-    NavigationDestination(icon: FaIcon(FontAwesomeIcons.user), label: 'Perfil'),
-  ];
 
   void goBranch(int index) => navigationShell.goBranch(
     index,
@@ -29,10 +22,9 @@ class AppShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: goBranch,
-        destinations: destinations,
+      bottomNavigationBar: AppBottomNav(
+        currentIndex: navigationShell.currentIndex,
+        onSelected: goBranch,
       ),
     );
   }

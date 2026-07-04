@@ -30,16 +30,18 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Full-screen routes (no bottom bar)
       ...authRoutes,
       ...settingsRoutes,
+      // Profile opens over the shell from the app-bar avatar (not a tab).
+      ...profileRoutes,
 
-      // Authenticated tabs wrapped in the persistent shell
+      // Authenticated tabs wrapped in the persistent shell.
+      // Branch order must match the indices in [AppBottomNav].
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => AppShell(navigationShell: navigationShell),
         branches: [
           StatefulShellBranch(routes: homeRoutes),
-          StatefulShellBranch(routes: marketplaceRoutes),
           StatefulShellBranch(routes: eventsRoutes),
+          StatefulShellBranch(routes: marketplaceRoutes),
           StatefulShellBranch(routes: communityRoutes),
-          StatefulShellBranch(routes: profileRoutes),
         ],
       ),
     ],

@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 // Router
 import '/router/app_routes.dart';
 // Widgets
-import '/widgets/app_logo.dart';
+import '/widgets/app_top_bar.dart';
 // Utils
 import '/utils/extensions/context_extensions.dart';
 
@@ -23,8 +23,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const AppLogo(),
+      appBar: AppTopBar(
         actions: [
           TextButton(
             onPressed: () => context.push(AppRoutes.eventCreate),

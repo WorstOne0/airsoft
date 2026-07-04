@@ -58,6 +58,7 @@ dependencies:
   google_fonts: ^8.0.2
   cached_network_image: ^3.4.1
   font_awesome_flutter: ^11.0.0
+  wolt_modal_sheet: ^0.11.0
 
   # Notifications & Firebase (wired as services, not yet initialized in main)
   firebase_core: ^4.7.0
@@ -84,6 +85,20 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+
+  # App launcher icon generation (run: dart run flutter_launcher_icons)
+  flutter_launcher_icons: ^0.14.1
+
+# App launcher icons — generated from the AIRSOFT badge.
+# Regenerate after changing the source PNGs: `dart run flutter_launcher_icons`.
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/drawable/ic_launcher.png"
+  remove_alpha_ios: true
+  min_sdk_android: 21
+  adaptive_icon_background: "#453f2f"
+  adaptive_icon_foreground: "assets/drawable/ic_launcher_foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

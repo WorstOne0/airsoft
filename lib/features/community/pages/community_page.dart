@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 // Router
 import '/router/app_routes.dart';
 // Widgets
-import '/widgets/app_logo.dart';
+import '/widgets/app_top_bar.dart';
 // Utils
 import '/utils/extensions/context_extensions.dart';
 
@@ -22,12 +22,12 @@ class _CommunityPageState extends ConsumerState<CommunityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const AppLogo(),
+      appBar: AppTopBar(
         actions: [
           IconButton(
             onPressed: () => context.push(AppRoutes.friendAdd),
             icon: const Icon(Icons.person_add_alt),
+            tooltip: 'Adicionar amigo',
           ),
         ],
       ),
