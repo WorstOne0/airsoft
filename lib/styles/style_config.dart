@@ -329,7 +329,9 @@ ThemeData light() => ThemeData.light().copyWith(
   textButtonTheme: textButtonTheme(lightColorScheme),
   inputDecorationTheme: inputDecorationTheme(lightColorScheme),
   dividerColor: lightColorScheme.outlineVariant,
-  splashFactory: InkSparkle.splashFactory,
+  // Subtle olive ripple instead of the harsh white InkSparkle default.
+  splashColor: lightColorScheme.secondary.withValues(alpha: 0.12),
+  highlightColor: lightColorScheme.secondary.withValues(alpha: 0.06),
 );
 
 ThemeData dark() => ThemeData.dark().copyWith(
@@ -347,5 +349,7 @@ ThemeData dark() => ThemeData.dark().copyWith(
   textButtonTheme: textButtonTheme(darkColorScheme),
   inputDecorationTheme: inputDecorationTheme(darkColorScheme),
   dividerColor: darkColorScheme.outlineVariant,
-  splashFactory: InkSparkle.splashFactory,
+  // Subtle olive ripple instead of the harsh white InkSparkle default.
+  splashColor: darkColorScheme.secondary.withValues(alpha: 0.12),
+  highlightColor: darkColorScheme.secondary.withValues(alpha: 0.06),
 );

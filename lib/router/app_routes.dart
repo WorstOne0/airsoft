@@ -26,8 +26,11 @@ abstract final class AppRoutes {
 
   // Events
   static const events = '/events';
-  static const eventDetail = '/events/detail';
-  static const eventCreate = '/events/create';
+  static const eventDetail = '/event'; // full-screen, over the shell (no bottom bar)
+
+  // Host a game (full-screen flow, over the shell)
+  static const hostGame = '/host';
+  static const hostPublished = '/host/published';
 
   // Community (friends)
   static const community = '/community';

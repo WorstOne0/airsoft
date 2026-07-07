@@ -6,6 +6,7 @@ import '/router/app_routes.dart';
 import '/widgets/placeholder_scaffold.dart';
 // Pages
 import 'pages/home_page.dart';
+import 'pages/create_post_page.dart';
 
 final homeRoutes = <RouteBase>[
   GoRoute(
@@ -14,7 +15,7 @@ final homeRoutes = <RouteBase>[
     routes: [
       GoRoute(
         path: 'create-post',
-        builder: (_, _) => const PlaceholderScaffold(title: 'Criar Publicação', showBack: true),
+        builder: (_, _) => const CreatePostPage(),
       ),
       GoRoute(
         path: 'create-story',

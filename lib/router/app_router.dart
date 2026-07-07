@@ -6,6 +6,7 @@ import '/features/authentication/auth_routes.dart';
 import '/features/home/home_routes.dart';
 import '/features/marketplace/marketplace_routes.dart';
 import '/features/events/events_routes.dart';
+import '/features/events/host_routes.dart';
 import '/features/community/community_routes.dart';
 import '/features/profile/profile_routes.dart';
 import '/features/settings/settings_routes.dart';
@@ -32,6 +33,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       ...settingsRoutes,
       // Profile opens over the shell from the app-bar avatar (not a tab).
       ...profileRoutes,
+      // Event detail — full-screen over the shell (no bottom bar).
+      ...eventDetailRoutes,
+      // Host-a-game — full-screen over the shell.
+      ...hostRoutes,
 
       // Authenticated tabs wrapped in the persistent shell.
       // Branch order must match the indices in [AppBottomNav].
